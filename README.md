@@ -14,7 +14,35 @@ The program uses the `bytemuck` crate to directly cast Solana account data buffe
 The event queue is designed as a ring buffer, minimizing compute costs by avoiding array shifts during insertion and deletion. This allows for high-throughput event processing and settlement.
 
 
+---
 
+## 🗂️ Project Structure
+
+```
+onchain-orderbook/
+├── Cargo.toml                # Rust program manifest
+├── src/
+│   ├── lib.rs                # Program entrypoint
+│   ├── state.rs              # Core data structures (market, orderbook, events, accounts)
+│   ├── processor.rs          # Instruction dispatch and processing logic
+│   └── instructions/         # Handlers for each instruction
+│       ├── initialize_market.rs
+│       ├── create_order.rs
+│       ├── consume_events.rs
+│       ├── settle_funds.rs
+│       ├── cancel_order.rs
+│       └── mod.rs
+└── client/
+    ├── package.json
+    ├── tsconfig.json
+    ├── jest.config.js
+    └── test/
+        ├── program.test.ts   # End-to-end tests
+        ├── schema.ts         # Borsh schemas for serialization
+        └── utils.ts
+```
+
+---
 
 ## 🚀 Getting Started
 
