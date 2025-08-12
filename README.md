@@ -164,4 +164,3 @@ This project includes a comprehensive suite of integration tests in [`client/tes
 
 ---
 
-# onchain-orderbook
