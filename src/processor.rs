@@ -4,14 +4,7 @@ use solana_program::{entrypoint::ProgramResult, account_info::AccountInfo, pubke
 use crate::{instructions::{cancel_order::cancel_order, consume_events::consume_events, create_order::create_order, initialize_market::initialize_market_instruction, settle_funds::settle_funds}, state::{CancelOrderArgs, ConsumeEventsArgs, CreateOrderArgs}};
 
 
-#[derive(BorshSerialize, BorshDeserialize)]
-pub enum OrderBookInstruction {
-    InitializeMarket,
-    CreateOrder(CreateOrderArgs),
-    ConsumeEvents(ConsumeEventsArgs),
-    SettleFunds,
-    CancelOrder(CancelOrderArgs)
-}
+
 
 pub fn process(
     program_id: &Pubkey,
