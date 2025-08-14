@@ -285,7 +285,13 @@ impl MarketEventsAccount {
 }
 
 
-
+#[derive(BorshSerialize, BorshDeserialize)]
+pub struct CreateOrderArgs {
+    pub side: Side,
+    pub limit_price: u64,
+    pub coin_qty: u64,
+    pub pc_qty: u64,
+}
 
 
 #[derive(BorshSerialize, BorshDeserialize)]
