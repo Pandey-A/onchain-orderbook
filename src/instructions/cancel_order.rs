@@ -61,16 +61,7 @@ pub fn cancel_order(
     let removed_order = order_book_data.safely_remove_order_by_order_id(args.order_id, *owner_account.key)?;
     msg!("Removed Order");
 
-    //emit event
-    let event = Event {
-        event_type: EventType::Out,
-        side: args.side,
-        maker: *owner_account.key,
-        taker: *owner_account.key,
-        coin_qty: removed_order.quantity - removed_order.filled_quantity,
-        pc_qty: (removed_order.quantity - removed_order.filled_quantity) * removed_order.price,
-        maker_order_id: removed_order.order_id
-    };
+    
     let result = market_events_data.enqueue(event)?;
     if !result {
         //TODO: handle this
