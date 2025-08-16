@@ -177,43 +177,7 @@ pub fn settle_funds(
         
     }
 
-    if pc_transfer_eligible {
-        let transfer_ix = transfer(
-            token_program_account.key, 
-            pc_vault_account.key, 
-            user_pc_account.key, 
-            market_account.key, 
-            &[market_account.key, owner_account.key],
-            user_market_data.free_pc
-        )?;
-
-        invoke_signed(
-            &transfer_ix, 
-            &[
-                coin_mint_account.clone(),
-                pc_vault_account.clone(),
-                user_pc_account.clone(),
-                market_account.clone(),
-                owner_account.clone(),
-                token_program_account.clone(),
-            ], 
-            &[&[
-                b"market", 
-                pc_mint_account.key.as_ref(), 
-                coin_mint_account.key.as_ref(),
-                &[market_bump]
-            ]]
-        )?;
-        msg!("Transferred Pc Balance to User");
-    }
-
-    user_market_data.free_coin = 0;
-    user_market_data.free_pc = 0;
-
-    let mut writer = Cursor::new(&mut user_market_raw_data[..]);
-    user_market_data.serialize(&mut writer)?;
-    msg!("Reset User Market Data");
-
+    
 
     Ok(())
 }
