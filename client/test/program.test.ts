@@ -42,7 +42,29 @@ describe("Orderbook tests", () => {
     let initialCoinQty: number;
     let initialPcQty: number;
     
+beforeAll(async ()=> {
+        svm = new LiteSVM();
+        programId = PublicKey.unique();
+        svm.addProgramFromFile(programId, "test/onchain_orderbook.so");
+        
+        initialCoinQty = 10;
+        initialPcQty = 10000;
 
+        
+        accountsAuthority = new Keypair();
+        svm.airdrop(accountsAuthority.publicKey, BigInt(100 * LAMPORTS_PER_SOL));
+
+        //create market events account
+        marketEventsAccount = new Keypair();
+        const mktEventsAccountIx = new Transaction().add(
+            SystemProgram.createAccount({
+                fromPubkey: accountsAuthority.publicKey,
+                newAccountPubkey: marketEventsAccount.publicKey,
+                lamports: Number(svm.minimumBalanceForRentExemption(BigInt(EVENT_ACCOUNT_LEN))),
+                space: EVENT_ACCOUNT_LEN,
+                programId: programId
+            })
+        );
     
         mktEventsAccountIx.feePayer = accountsAuthority.publicKey;
         mktEventsAccountIx.recentBlockhash = svm.latestBlockhash();
