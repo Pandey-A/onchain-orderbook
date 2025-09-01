@@ -320,7 +320,7 @@ export const ConsumeEventsSchema: borsh.Schema = {
 
 export const CancelOrderSchema: borsh.Schema = {
     struct : {
-        order_id: "u32",
+        order_id: "u64",
         side: "u8"
     }
 }
